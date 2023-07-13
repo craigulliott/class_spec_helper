@@ -1,0 +1,9 @@
+# TypeProf 0.21.7
+
+# Classes
+class ClassSpecHelper
+  module Naming
+    def self.namespace_from_name: (String | Symbol fully_qualified_class_name) -> singleton(Object)
+    def self.class_name_from_name: (String | Symbol name) -> String
+  end
+end

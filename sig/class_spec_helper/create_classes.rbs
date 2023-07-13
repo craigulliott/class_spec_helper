@@ -1,0 +1,10 @@
+# TypeProf 0.21.7
+
+# Classes
+class ClassSpecHelper
+  module CreateClasses
+
+    def self.create_class: (String fully_qualified_class_name, ?singleton(Object) base_class) -> singleton(Object)
+
+  end
+end

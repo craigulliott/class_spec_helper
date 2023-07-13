@@ -1,0 +1,11 @@
+# TypeProf 0.21.7
+
+# Classes
+class ClassSpecHelper
+  module DestroyClasses
+
+    def self.remove_all_dynamically_created_classes: -> void
+    def self.destroy_class: (singleton(Object) klass) -> void
+
+  end
+end

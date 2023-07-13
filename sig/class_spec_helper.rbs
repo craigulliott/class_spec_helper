@@ -1,0 +1,21 @@
+# TypeProf 0.21.7
+
+# Classes
+class ClassSpecHelper
+  VERSION: String
+
+  include CreateClasses
+  include DestroyClasses
+  include Naming
+
+  @classes: Hash[Symbol, singleton(Object)]
+
+  class ClassAlreadyDynamicallyCreatedError < StandardError
+  end
+
+  class ClassAlreadyExistsError < StandardError
+  end
+
+  class ClassNameError < StandardError
+  end
+end
