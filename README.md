@@ -51,11 +51,22 @@ require "class_spec_helper"
 
 RSpec.configure do |config|
 
-  # make class_spec_helper conveniently accessable within your test suite
+  # make class_spec_helper conveniently accessible within your test suite
   config.add_setting :class_spec_helper
   config.class_spec_helper = ClassSpecHelper.new
 
-  # destroy these dyanmically created classes after each test
+  # Run the garbage collector before each test. As long as there are no
+  # references in your code to the classes you created during your tests
+  # then this will help ensure that your classes are also completely destroyed.
+  #
+  # If you do not do this, then your deleted classes may still be available
+  # in `ObjectSpace` until the garbage collector runs. Adding this to your
+  # rspec is necessary if your code relies on `ObjectSpace`.
+  config.before(:each) do
+    ObjectSpace.garbage_collect
+  end
+
+  # destroy these dynamically created classes after each test
   config.after(:each) do
     config.class_spec_helper.remove_all_dynamically_created_classes
   end

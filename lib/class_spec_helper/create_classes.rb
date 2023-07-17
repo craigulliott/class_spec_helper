@@ -67,6 +67,17 @@ class ClassSpecHelper
 
       # finish building the class
       klass.class_eval(&block) if block
+
+      # If we are using this in a test suite and the same class names are being used
+      # between each test, then after creation has proven to be a good time to run the
+      # garbage collector manually. It is very likely that all references to the old
+      # class are gone at this point.
+      #
+      # We do this because it is possibe that this is being used within a test suite
+      # for an application which makes use of `ObjectSpace`, and deleted classes will
+      # still be available in `ObjectSpace` until the garbage collector runs.
+      ObjectSpace.garbage_collect
+
     end
   end
 end
