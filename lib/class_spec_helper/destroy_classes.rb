@@ -5,7 +5,9 @@ class ClassSpecHelper
     # remove any classes (constants) which were
     # created by the class helper
     def remove_all_dynamically_created_classes
-      @classes.each do |fully_qualified_class_name, klass|
+      # destroy them in the reverse order which they were created
+      @classes.keys.reverse_each do |fully_qualified_class_name|
+        klass = @classes[fully_qualified_class_name]
         # destroy the class by removing the constant
         destroy_class klass
         # remove the class from the list of classes

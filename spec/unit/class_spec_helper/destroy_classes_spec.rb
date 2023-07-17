@@ -24,6 +24,37 @@ RSpec.describe ClassSpecHelper do
             MyClass
           }.to raise_error NameError
         end
+
+        describe "after other classes are nested within this class" do
+          before(:each) do
+            class_spec_helper.create_class "MyClass::FooClass"
+            class_spec_helper.create_class "MyClass::FooClass::BarClass"
+            class_spec_helper.create_class "MyClass::FooClass::BarClass::FinalClass"
+          end
+
+          it "removes the classes" do
+            # expect it to be available at the top most Object level
+            expect(MyClass).to be_a Class
+            expect(MyClass::FooClass).to be_a Class
+            expect(MyClass::FooClass::BarClass).to be_a Class
+            expect(MyClass::FooClass::BarClass::FinalClass).to be_a Class
+
+            class_spec_helper.remove_all_dynamically_created_classes
+
+            expect {
+              MyClass::FooClass::BarClass::FinalClass
+            }.to raise_error NameError
+            expect {
+              MyClass::FooClass::BarClass
+            }.to raise_error NameError
+            expect {
+              MyClass::FooClass
+            }.to raise_error NameError
+            expect {
+              MyClass
+            }.to raise_error NameError
+          end
+        end
       end
     end
 
