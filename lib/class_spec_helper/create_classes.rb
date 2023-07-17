@@ -77,7 +77,6 @@ class ClassSpecHelper
       # for an application which makes use of `ObjectSpace`, and deleted classes will
       # still be available in `ObjectSpace` until the garbage collector runs.
       ObjectSpace.garbage_collect
-
     end
   end
 end
