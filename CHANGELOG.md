@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/craigulliott/class_spec_helper/compare/v1.1.1...v1.1.2) (2023-07-17)
+
+
+### Bug Fixes
+
+* destroy classes in the reverse order which they were created to make sure nested classes are destroyed in a viable order ([61977da](https://github.com/craigulliott/class_spec_helper/commit/61977da3d0c0a1ff1c02e6a5faaceff0fad6fec1))
+
 ## [1.1.1](https://github.com/craigulliott/class_spec_helper/compare/v1.1.0...v1.1.1) (2023-07-17)
 
 
