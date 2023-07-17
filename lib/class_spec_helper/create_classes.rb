@@ -36,11 +36,21 @@ class ClassSpecHelper
       # is this class nested within a namespace?
       is_namespaced = module_names.any?
       if is_namespaced
+        first_name = module_names.shift
+        # keep track of the namespace
+        namespace = "::#{first_name}"
+        # does this exist, and is it a class
+        is_class = Module.const_defined?(namespace) && Module.const_get(namespace).is_a?(Class)
         # first module is always prepended by a "::" to ensure it is at the top most level
-        eval_code_lines << "module ::#{module_names.shift}"
+        eval_code_lines << "#{is_class ? "class" : "module"} ::#{first_name}"
         # each remaining module name is just nested within this top most module
         module_names.each do |module_name|
-          eval_code_lines << "module #{module_name}"
+          # keep building the namespace we we go
+          namespace = "#{namespace}::#{module_name}"
+          # does this exist, and is it a class
+          is_class = is_class = Module.const_defined?(namespace) && Module.const_get(namespace).is_a?(Class)
+          # add the next line
+          eval_code_lines << "#{is_class ? "class" : "module"} #{module_name}"
         end
       end
       # the class definition

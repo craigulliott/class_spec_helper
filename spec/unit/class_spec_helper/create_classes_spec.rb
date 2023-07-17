@@ -56,6 +56,36 @@ RSpec.describe ClassSpecHelper do
         Object.send :remove_const, :MyModule
       end
 
+      it "creates a new namespaced class which is namespaced within a class and not a module" do
+        class_spec_helper.create_class "MainClass"
+        class_spec_helper.create_class "MainClass::MyClass"
+
+        expect(MainClass::MyClass).to be_a Class
+
+        # expect it to be available at the top most Object level
+        expect(Object.const_defined?("MainClass::MyClass")).to be true
+
+        # remove it up again
+        MainClass.send :remove_const, :MyClass
+        Object.send :remove_const, :MainClass
+      end
+
+      it "creates a new deeply namespaced class which is namespaced within other classes and not modules" do
+        class_spec_helper.create_class "MainClass"
+        class_spec_helper.create_class "MainClass::NextClass"
+        class_spec_helper.create_class "MainClass::NextClass::MyClass"
+
+        expect(MainClass::NextClass::MyClass).to be_a Class
+
+        # expect it to be available at the top most Object level
+        expect(Object.const_defined?("MainClass::NextClass::MyClass")).to be true
+
+        # remove it up again
+        MainClass::NextClass.send :remove_const, :MyClass
+        MainClass.send :remove_const, :NextClass
+        Object.send :remove_const, :MainClass
+      end
+
       it "raises an error if the class already exists" do
         expect {
           class_spec_helper.create_class :Integer
