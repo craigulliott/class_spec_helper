@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/craigulliott/class_spec_helper/compare/v1.1.0...v1.1.1) (2023-07-17)
+
+
+### Bug Fixes
+
+* can now correctly build the new requested class if it is namespaced within already existing classes ([505b8c9](https://github.com/craigulliott/class_spec_helper/commit/505b8c9e07b3a326ac646c90ebb3b537df9d0981))
+
 ## [1.1.0](https://github.com/craigulliott/class_spec_helper/compare/v1.0.0...v1.1.0) (2023-07-17)
 
 
